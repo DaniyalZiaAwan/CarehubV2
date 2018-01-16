@@ -12,6 +12,7 @@ namespace SehatClone.Models
         public DbSet<Speciality> Specialities { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Donor> Donors { get; set; }
+        public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
 
         public ApplicationDbContext()

@@ -26,12 +26,14 @@ namespace SehatClone.Controllers
             var doctors = db.Doctors.Include(d => d.Speciality).ToList();
 
             var donors = db.Donors.ToList();
+            var hospitals = db.Hospitals.ToList();
 
             var viewModel = new AdminIndexVm
             {
                 Centers = centers,
                 Doctors = doctors,
-                Donors = donors
+                Donors = donors,
+                Hospitals = hospitals
             };
 
             return View(viewModel);
@@ -73,6 +75,20 @@ namespace SehatClone.Controllers
                 return HttpNotFound("Donor Not Found !");
 
             donor.IsApproved = true;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ApproveHospital(int id)
+        {
+            var hospital = db.Hospitals.Find(id);
+
+            if (hospital == null)
+                return HttpNotFound("Hospital Not Found !");
+
+            hospital.IsApproved = true;
 
             db.SaveChanges();
 

@@ -72,6 +72,7 @@ namespace SehatClone.Controllers
             doctor.Password = vm.Password;
             doctor.ConfirmPassword = vm.ConfirmPassword;
             doctor.Phone = vm.Phone;
+            doctor.ImageUrl = vm.ImageUrl;
             doctor.Gender = vm.Gender;
             doctor.City = vm.City;
             doctor.IsApproved = false;

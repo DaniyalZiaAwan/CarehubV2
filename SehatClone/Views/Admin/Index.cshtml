@@ -192,6 +192,57 @@
             }
         </div>
     </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h3 class="text-center">Hospitals</h3>
+
+            @if (Model.Hospitals.Count > 0)
+            {
+                <table id="hospitals" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Phone</th>
+                            <th>Approve</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var hospital in Model.Hospitals)
+                        {
+                            <tr>
+                                <td>@hospital.ContactName</td>
+                                <td>@hospital.Email</td>
+                                <td>@hospital.Location</td>
+                                <td>@hospital.Phone</td>
+                                <td>
+                                    @if (!hospital.IsApproved)
+                                    {
+                                        <a href="@Url.Action("ApproveHospital", "Admin", new { id = hospital.Id })" class="btn btn-primary">Approve</a>
+                                    }
+                                    else
+                                    {
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-danger">
+                    No Hospitals To Show
+                </div>
+            }
+        </div>
+    </div>
 </div>
 
 @section scripts {
@@ -200,6 +251,7 @@
             $('#doctors').DataTable();
             $('#centers').DataTable();
             $('#donors').DataTable();
+            $('#hospitals').DataTable();
         })
       
     </script>

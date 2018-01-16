@@ -18,21 +18,29 @@ namespace SehatClone.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var articles = db.Articles.Include(a => a.Type)
+                        .OrderByDescending(a => a.Id).Take(6).ToList();
+            var vm = new HomeIndexVm { Articles = articles };
+            return View(vm);
         }
 
         [HttpPost]
         public ActionResult Search(SearchVm searchVm)
         {
-            if (searchVm.UserType == "doctor")
+            if (searchVm.UserType == "doctors")
             {
                 var doctors = SearchDoctors(searchVm);
                 return View("Doctors", doctors);
             }
-            else if (searchVm.UserType == "center")
+            else if (searchVm.UserType == "centers")
             {
                 var centers = SearchCenters(searchVm);
                 return View("Centers", centers);
+            }
+            else if (searchVm.UserType == "hospitals")
+            {
+                var hospitals = SearchHospitals(searchVm);
+                return View("Hospitals", hospitals);
             }
 
             var donors = SearchDonors(searchVm);
@@ -48,6 +56,16 @@ namespace SehatClone.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            return View();
+        }
+
+        public ActionResult Privacy()
+        {
+            return View();
+        }
+
+        public ActionResult Terms()
+        {
             return View();
         }
 
@@ -79,6 +97,15 @@ namespace SehatClone.Controllers
                                          c.Location.ToLower().Contains(searchVm.Location.ToLower()))
                                          && c.IsApproved);
             return donors.ToList();
+        }
+
+        List<Hospital> SearchHospitals(SearchVm searchVm)
+        {
+            var hospitals = db.Hospitals
+                            .Where(c => (c.ContactName.ToLower().Contains(searchVm.SearchTxt.ToLower()) ||
+                                         c.Location.ToLower().Contains(searchVm.Location.ToLower()))
+                                         && c.IsApproved);
+            return hospitals.ToList();
         }
     }
 }

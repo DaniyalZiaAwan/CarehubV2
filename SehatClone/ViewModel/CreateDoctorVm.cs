@@ -14,6 +14,8 @@ namespace SehatClone.ViewModel
         [Required]
         public string Password { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [Required]
         [Compare("Password", ErrorMessage = "Password Dosent Match")]
         public string ConfirmPassword { get; set; }
